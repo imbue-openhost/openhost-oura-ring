@@ -11,8 +11,11 @@ port = 8080
 health_check = "/health"
 
 [resources]
-memory_mb = 256
-cpu_millicores = 200
+# The image build peaks ~410 MB (uv sync), and a history backfill pulls +
+# stores a lot of data, so 256 MB was tight (idle already ~90 MB). 512 MB
+# covers the build and leaves runtime headroom.
+memory_mb = 512
+cpu_cores = 0.2
 
 [data]
 sqlite = ["health"]
